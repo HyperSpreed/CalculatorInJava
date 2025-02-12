@@ -7,12 +7,12 @@ public class Calculator implements ActionListener {
     JFrame frame;
     JTextField textField;
     JButton[] numberButtons = new JButton[10];
-    JButton[] functionButtons = new JButton[8];
+    JButton[] functionButtons = new JButton[9];
     JButton addButton,subButton,timesButton,divideButton;
-    JButton equalsButton, decimalButton, deleteButton, clearButton;
+    JButton negativeButton, equalsButton, decimalButton, deleteButton, clearButton;
     JPanel panel;
 
-    Font myFont = new Font("Serif", Font.BOLD,30);
+    Font myFont = new Font("Josefin", Font.BOLD,30);
 
     double num1 = 0, num2 = 0, result = 0;
     char operator;
@@ -27,6 +27,7 @@ public class Calculator implements ActionListener {
         textField.setBounds(50,30,300,50);
         textField.setFont(myFont);
         textField.setEditable(false);
+        textField.setFocusable(false);
 
         addButton = new JButton("+");
         subButton = new JButton("-");
@@ -36,6 +37,7 @@ public class Calculator implements ActionListener {
         decimalButton = new JButton(".");
         deleteButton = new JButton("C");
         clearButton = new JButton("AC");
+        negativeButton = new JButton("(-)");
 
         functionButtons[0] = addButton;
         functionButtons[1] = subButton;
@@ -45,8 +47,9 @@ public class Calculator implements ActionListener {
         functionButtons[5] = decimalButton;
         functionButtons[6] = deleteButton;
         functionButtons[7] = clearButton;
+        functionButtons[8] = negativeButton;
 
-        for(int i = 0; i<8;i++){
+        for(int i = 0; i<9;i++){
             functionButtons[i].addActionListener(this);
             functionButtons[i].setFont(myFont);
             functionButtons[i].setFocusable(false);
@@ -59,8 +62,9 @@ public class Calculator implements ActionListener {
             numberButtons[i].setFocusable(false);
         }
 
-        deleteButton.setBounds(50,430,145,50);
-        clearButton.setBounds(205,430,145,50);
+        negativeButton.setBounds(50,430,100,50);
+        deleteButton.setBounds(150,430,100,50);
+        clearButton.setBounds(250,430,100,50);
 
         panel = new JPanel();
         panel.setBounds(50,100,300,300);
@@ -85,6 +89,7 @@ public class Calculator implements ActionListener {
         panel.add(divideButton);
 
         frame.add(panel);
+        frame.add(negativeButton);
         frame.add(deleteButton);
         frame.add(clearButton);
         frame.add(textField);
@@ -149,6 +154,25 @@ public class Calculator implements ActionListener {
 
         }
 
+        if (e.getSource() == clearButton){
+            textField.setText("");
+        }
+        if (e.getSource() == deleteButton){
+            String string = textField.getText();
+            textField.setText("");
+
+            for (int i = 0; i<string.length()-1;i++){
+                textField.setText(textField.getText()+string.charAt(i));
+            }
+
+        }
+
+        if (e.getSource()== negativeButton){
+            double temp = Double.parseDouble(textField.getText());
+            temp *= -1;
+            textField.setText(String.valueOf(temp));
+        }
+
     }
-    
+
 }
